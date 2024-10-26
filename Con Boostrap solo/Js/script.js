@@ -1,9 +1,8 @@
-
-
 const formLogin = document.getElementById('form_login');
 const formRegister = document.getElementById('form_register');
 const btnSubmitLogin = document.getElementById('btn__submit-login');
 const btnSubmitRegister = document.getElementById('btn__submit-register');
+
 
 document.getElementById('link_registrar').addEventListener('click', function (e) {
     e.preventDefault();
@@ -11,13 +10,11 @@ document.getElementById('link_registrar').addEventListener('click', function (e)
     formRegister.classList.remove('d-none');
 });
 
-
 document.getElementById('link_iniciar_sesion').addEventListener('click', function (e) {
     e.preventDefault();
     formRegister.classList.add('d-none');
     formLogin.classList.remove('d-none');
 });
-
 
 let data = {
     usuarios: JSON.parse(localStorage.getItem('usuarios')) || [],
@@ -30,19 +27,28 @@ let data = {
 };
 
 
+if (!data.usuarios.some(user => user.email === 'admin')) {
+    data.usuarios.push({
+        nombre: 'Administrador',
+        email: 'admin',
+        usuario: 'admin',
+        password: 'admin',
+        role: 'admin'
+    });
+    localStorage.setItem('usuarios', JSON.stringify(data.usuarios));
+}
+
+
 function register() {
     const nombre = document.getElementById('register_nombre').value;
     const email = document.getElementById('register_email').value;
     const usuario = document.getElementById('register_usuario').value;
     const password = document.getElementById('register_password').value;
-    const role = document.getElementById('selectRole').value;
-
 
     if (!nombre || !email || !usuario || !password) {
         alert("Por favor, completa todos los campos.");
         return;
     }
-
 
     const usuarioExistente = data.usuarios.find(u => u.email === email);
     if (usuarioExistente) {
@@ -50,15 +56,12 @@ function register() {
         return;
     }
 
-
-    const nuevoUsuario = { nombre, email, usuario, password, role };
+    const nuevoUsuario = { nombre, email, usuario, password, role: 'regular' };
     data.usuarios.push(nuevoUsuario);
     localStorage.setItem('usuarios', JSON.stringify(data.usuarios));
 
     alert(data.mensajes.registroExitoso);
-    formRegister.reset(); 
-
-
+    formRegister.reset();
     formRegister.classList.add('d-none');
     formLogin.classList.remove('d-none');
 }
@@ -74,17 +77,15 @@ function iniciarSesion() {
         alert(data.mensajes.inicioSesionExitoso);
         localStorage.setItem('loggedInUser', JSON.stringify(usuarioExistente));
 
-
         if (usuarioExistente.role === 'admin') {
-            window.location.href = "admin.html"; 
+            window.location.href = "admin.html";
         } else {
-            window.location.href = "Parking.html"; 
+            window.location.href = "Parking.html";
         }
     } else {
         alert(data.mensajes.correoOContrasenaIncorrectos);
     }
 }
-
 
 btnSubmitRegister.addEventListener('click', register);
 btnSubmitLogin.addEventListener('click', iniciarSesion);
