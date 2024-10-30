@@ -3,7 +3,6 @@ const formRegister = document.getElementById('form_register');
 const btnSubmitLogin = document.getElementById('btn__submit-login');
 const btnSubmitRegister = document.getElementById('btn__submit-register');
 
-
 document.getElementById('link_registrar').addEventListener('click', function (e) {
     e.preventDefault();
     formLogin.classList.add('d-none');
@@ -16,8 +15,17 @@ document.getElementById('link_iniciar_sesion').addEventListener('click', functio
     formLogin.classList.remove('d-none');
 });
 
+// Estructura inicial de usuarios, sin depender de localStorage
 let data = {
-    usuarios: JSON.parse(localStorage.getItem('usuarios')) || [],
+    usuarios: [
+        {
+            nombre: 'Administrador',
+            email: 'admin',
+            usuario: 'admin',
+            password: 'admin',
+            role: 'admin'
+        }
+    ],
     mensajes: {
         registroExitoso: "¡Registro exitoso! Ahora puedes iniciar sesión.",
         correoYaRegistrado: "Este correo ya está registrado",
@@ -27,18 +35,11 @@ let data = {
 };
 
 
-if (!data.usuarios.some(user => user.email === 'admin')) {
-    data.usuarios.push({
-        nombre: 'Administrador',
-        email: 'admin',
-        usuario: 'admin',
-        password: 'admin',
-        role: 'admin'
-    });
-    localStorage.setItem('usuarios', JSON.stringify(data.usuarios));
-}
+/*
+data.usuarios = JSON.parse(localStorage.getItem('usuarios')) || data.usuarios;
+*/
 
-
+// Función para registro de usuario
 function register() {
     const nombre = document.getElementById('register_nombre').value;
     const email = document.getElementById('register_email').value;
@@ -58,7 +59,9 @@ function register() {
 
     const nuevoUsuario = { nombre, email, usuario, password, role: 'regular' };
     data.usuarios.push(nuevoUsuario);
-    localStorage.setItem('usuarios', JSON.stringify(data.usuarios));
+
+    
+    // localStorage.setItem('usuarios', JSON.stringify(data.usuarios));
 
     alert(data.mensajes.registroExitoso);
     formRegister.reset();
@@ -66,7 +69,7 @@ function register() {
     formLogin.classList.remove('d-none');
 }
 
-
+// Función para iniciar sesión
 function iniciarSesion() {
     const email = document.getElementById('login_email').value;
     const password = document.getElementById('login_password').value;
@@ -75,7 +78,9 @@ function iniciarSesion() {
 
     if (usuarioExistente) {
         alert(data.mensajes.inicioSesionExitoso);
-        localStorage.setItem('loggedInUser', JSON.stringify(usuarioExistente));
+        
+       
+        // localStorage.setItem('loggedInUser', JSON.stringify(usuarioExistente));
 
         if (usuarioExistente.role === 'admin') {
             window.location.href = "admin.html";

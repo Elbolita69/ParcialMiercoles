@@ -1,4 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
+    
+    /*
     const usuarioLogueado = JSON.parse(localStorage.getItem("loggedInUser"));
 
     if (usuarioLogueado && usuarioLogueado.role === "admin") {
@@ -12,9 +14,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 <a class="nav-link" href="./admin.html">Admin</a>
             `;
 
-            
             const parkingNavItem = navbarNav.querySelector("a[href='./Parking.html']").parentElement;
             parkingNavItem.insertAdjacentElement("afterend", adminNavItem);
         }
     }
+    */
 });

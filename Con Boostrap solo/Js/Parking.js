@@ -1,16 +1,18 @@
-
-
 const registrationForm = document.getElementById('registrationForm');
 const parkingLot = document.getElementById('parkingLot');
 
+// Se comenta ya que depende de localStorage
+/*
 const parkedCars = JSON.parse(localStorage.getItem('parkedCars')) || {};
+*/
+
+const parkedCars = {}; // Sin localStorage, parkedCars empieza vacío
 
 registrationForm.addEventListener('submit', function(event) {
   event.preventDefault();
   const documentNumber = document.getElementById('documentNumber').value;
   const userName = document.getElementById('userName').value;
   const parkingSpot = document.getElementById('parkingSpot').value;
-
 
   if (!documentNumber || isNaN(documentNumber)) {
     document.getElementById('documentNumberError').textContent = 'El número de documento debe ser un número.';
@@ -30,7 +32,8 @@ registrationForm.addEventListener('submit', function(event) {
     alert('El lugar de estacionamiento ya está ocupado.');
   } else {
     parkedCars[parkingSpot] = { userName, documentNumber };
-    localStorage.setItem('parkedCars', JSON.stringify(parkedCars));
+    // Se comenta ya que depende de localStorage
+    // localStorage.setItem('parkedCars', JSON.stringify(parkedCars));
     updateParkingLot();
   }
 });
@@ -51,9 +54,7 @@ function updateParkingLot() {
   }
 }
 
-
 updateParkingLot();
-
 
 document.getElementById('searchForm').addEventListener('submit', function(event) {
   event.preventDefault();
@@ -71,17 +72,17 @@ document.getElementById('searchForm').addEventListener('submit', function(event)
 
 // Verificación de acceso a Parking.html
 function verificarAccesoParking() {
+    
+    /*
     const usuarioLogueado = JSON.parse(localStorage.getItem("loggedInUser"));
 
     if (!usuarioLogueado) {
         alert("Acceso denegado. Debes iniciar sesión.");
         window.location.href = "Login.html"; 
     }
+    */
 }
-
 
 document.addEventListener("DOMContentLoaded", function() {
     verificarAccesoParking(); 
 });
-
-

@@ -1,20 +1,23 @@
 function verificarAccesoAdmin() {
+    // Esta función depende de localStorage, se deja comentada para no utilizarla sin modificaciones adicionales
+    /*
     const usuarioLogueado = JSON.parse(localStorage.getItem("loggedInUser"));
-
+    
     if (!usuarioLogueado || usuarioLogueado.role !== "admin") {
         alert("Acceso denegado. Solo administradores pueden acceder.");
         window.location.href = "index.html";
     }
+    */
 }
 
 function cargarUsuarios() {
+    
+    /*
     const usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
     const userList = document.getElementById("userList");
 
-    
     userList.innerHTML = '';
 
-    
     const title = document.createElement('h2');
     title.textContent = "Lista de Usuarios";
     userList.appendChild(title);
@@ -28,7 +31,7 @@ function cargarUsuarios() {
 
         const userInfo = document.createElement('div');
         userInfo.innerHTML = `<strong>${usuario.nombre}</strong> - ${usuario.email} (${usuario.role})`;
-        
+
         const buttonDiv = document.createElement('div');
 
         const btnCambiarRol = document.createElement('button');
@@ -46,35 +49,36 @@ function cargarUsuarios() {
         btnEliminar.innerHTML = "🗑️";
         btnEliminar.onclick = () => eliminarUsuario(index);
 
-    
         buttonDiv.appendChild(btnCambiarRol);
         buttonDiv.appendChild(btnModificar);
         buttonDiv.appendChild(btnEliminar);
 
-        
         li.appendChild(userInfo);
         li.appendChild(buttonDiv);
 
-        
         ul.appendChild(li);
     });
 
-   
     userList.appendChild(ul);
+    */
 }
 
 function cambiarRol(index) {
+    
+    /*
     const usuarios = JSON.parse(localStorage.getItem("usuarios"));
     usuarios[index].role = usuarios[index].role === "admin" ? "regular" : "admin";
     localStorage.setItem("usuarios", JSON.stringify(usuarios));
     cargarUsuarios();
+    */
 }
 
 function modificarUsuario(index) {
+    
+    /*
     const usuarios = JSON.parse(localStorage.getItem("usuarios"));
     const usuario = usuarios[index];
 
-    
     const modal = document.createElement('div');
     modal.className = 'modal fade show';
     modal.style.display = 'block';
@@ -155,15 +159,18 @@ function modificarUsuario(index) {
     modalContent.appendChild(modalInner);
     modal.appendChild(modalContent);
     document.body.appendChild(modal);
+    */
 }
 
 function eliminarUsuario(index) {
+    
+    /*
     const usuarios = JSON.parse(localStorage.getItem("usuarios"));
     usuarios.splice(index, 1); 
     localStorage.setItem("usuarios", JSON.stringify(usuarios));
     cargarUsuarios();
+    */
 }
 
-
-verificarAccesoAdmin();
-cargarUsuarios();
+// verificarAccesoAdmin();
+// cargarUsuarios();

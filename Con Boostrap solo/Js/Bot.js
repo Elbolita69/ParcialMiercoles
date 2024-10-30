@@ -1,5 +1,6 @@
-
-  function verificarAccesoChatbot() {
+function verificarAccesoChatbot() {
+    
+    /*
     const usuarioLogueado = JSON.parse(localStorage.getItem('loggedInUser'));
 
     if (!usuarioLogueado) {
@@ -7,18 +8,20 @@
         window.location.href = "Login.html"; 
         return false; 
     }
+    */
     return true; 
 }
 
-
 document.addEventListener("DOMContentLoaded", function() {
+   
+    /*
     if (verificarAccesoChatbot()) {
         const usuarioLogueado = JSON.parse(localStorage.getItem('loggedInUser'));
         const botMessage = document.getElementById('botMessage');
         botMessage.innerHTML = `<strong>Bot:</strong> ¡Hola, ${usuarioLogueado.nombre}! ¿Cómo estás?`;
     }
+    */
 });
-
 
 document.getElementById('sendButton').addEventListener('click', function() {
     const userInput = document.getElementById('userInput').value;
