@@ -1,19 +1,35 @@
 const registrationForm = document.getElementById('registrationForm');
 const parkingLot = document.getElementById('parkingLot');
 
-// Se comenta ya que depende de localStorage
-/*
 const parkedCars = JSON.parse(localStorage.getItem('parkedCars')) || {};
-*/
 
-const parkedCars = {}; // Sin localStorage, parkedCars empieza vacío
+
+function updateParkingLot() {
+  const spots = parkingLot.getElementsByClassName('parking-spot');
+  for (let spot of spots) {
+    const spotId = spot.getAttribute('data-spot');
+    const car = parkedCars[spotId];
+    if (car) {
+      spot.classList.add('bg-danger');
+      spot.classList.remove('bg-success');
+      spot.textContent = `${spotId} (Ocupado) - ${car.userName}, ${car.documentNumber}`;
+    } else {
+      spot.classList.remove('bg-danger');
+      spot.classList.add('bg-success');
+      spot.textContent = spotId;
+    }
+  }
+}
+
 
 registrationForm.addEventListener('submit', function(event) {
   event.preventDefault();
+
   const documentNumber = document.getElementById('documentNumber').value;
   const userName = document.getElementById('userName').value;
   const parkingSpot = document.getElementById('parkingSpot').value;
 
+  
   if (!documentNumber || isNaN(documentNumber)) {
     document.getElementById('documentNumberError').textContent = 'El número de documento debe ser un número.';
     return;
@@ -28,33 +44,17 @@ registrationForm.addEventListener('submit', function(event) {
     document.getElementById('userNameError').textContent = '';
   }
 
+
   if (parkedCars[parkingSpot]) {
     alert('El lugar de estacionamiento ya está ocupado.');
   } else {
+    
     parkedCars[parkingSpot] = { userName, documentNumber };
-    // Se comenta ya que depende de localStorage
-    // localStorage.setItem('parkedCars', JSON.stringify(parkedCars));
+    localStorage.setItem('parkedCars', JSON.stringify(parkedCars));
     updateParkingLot();
   }
 });
 
-function updateParkingLot() {
-  const spots = parkingLot.getElementsByClassName('parking-spot');
-  for (let spot of spots) {
-    const spotId = spot.getAttribute('data-spot');
-    if (parkedCars[spotId]) {
-      spot.classList.add('bg-danger');
-      spot.classList.remove('bg-success');
-      spot.textContent = `${spotId} (Ocupado)`;
-    } else {
-      spot.classList.remove('bg-danger');
-      spot.classList.add('bg-success');
-      spot.textContent = spotId;
-    }
-  }
-}
-
-updateParkingLot();
 
 document.getElementById('searchForm').addEventListener('submit', function(event) {
   event.preventDefault();
@@ -64,25 +64,23 @@ document.getElementById('searchForm').addEventListener('submit', function(event)
   );
 
   if (result) {
-    alert(`El usuario ${result[1].userName} está en el estacionamiento ${result[0]}`);
+    alert(`El usuario ${result[1].userName} está en el estacionamiento ${result[0]} (ID: ${result[1].documentNumber})`);
   } else {
     alert('No se encontró al usuario.');
   }
 });
 
-// Verificación de acceso a Parking.html
-function verificarAccesoParking() {
-    
-    /*
-    const usuarioLogueado = JSON.parse(localStorage.getItem("loggedInUser"));
 
-    if (!usuarioLogueado) {
-        alert("Acceso denegado. Debes iniciar sesión.");
-        window.location.href = "Login.html"; 
-    }
-    */
+function verificarAccesoParking() {
+  const usuarioLogueado = JSON.parse(localStorage.getItem("loggedInUser"));
+
+  if (!usuarioLogueado) {
+    alert("Acceso denegado. Debes iniciar sesión.");
+    window.location.href = "Login.html"; 
+  }
 }
 
 document.addEventListener("DOMContentLoaded", function() {
-    verificarAccesoParking(); 
+  verificarAccesoParking(); 
+  updateParkingLot();  
 });

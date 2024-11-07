@@ -1,17 +1,15 @@
+// Verificar acceso de administrador
 function verificarAccesoAdmin() {
-    
     const usuarioLogueado = JSON.parse(localStorage.getItem("loggedInUser"));
-    
+
     if (!usuarioLogueado || usuarioLogueado.role !== "admin") {
         alert("Acceso denegado. Solo administradores pueden acceder.");
         window.location.href = "index.html";
     }
-    
 }
 
+// Cargar lista de usuarios
 function cargarUsuarios() {
-    
-    
     const usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
     const userList = document.getElementById("userList");
 
@@ -59,22 +57,18 @@ function cargarUsuarios() {
     });
 
     userList.appendChild(ul);
-    
 }
 
+// Cambiar el rol de un usuario
 function cambiarRol(index) {
-    
-    
     const usuarios = JSON.parse(localStorage.getItem("usuarios"));
     usuarios[index].role = usuarios[index].role === "admin" ? "regular" : "admin";
     localStorage.setItem("usuarios", JSON.stringify(usuarios));
     cargarUsuarios();
-    
 }
 
+// Modificar un usuario
 function modificarUsuario(index) {
-    
-    
     const usuarios = JSON.parse(localStorage.getItem("usuarios"));
     const usuario = usuarios[index];
 
@@ -151,25 +145,100 @@ function modificarUsuario(index) {
         cargarUsuarios();
     };
 
+    const cancelarButton = document.createElement('button');
+    cancelarButton.className = 'btn btn-secondary';
+    cancelarButton.textContent = 'Cancelar';
+    cancelarButton.onclick = () => modal.remove();
+
     modalFooter.appendChild(guardarButton);
+    modalFooter.appendChild(cancelarButton);
+
     modalInner.appendChild(modalHeader);
     modalInner.appendChild(modalBody);
     modalInner.appendChild(modalFooter);
+
     modalContent.appendChild(modalInner);
     modal.appendChild(modalContent);
+
     document.body.appendChild(modal);
-    
 }
 
+// Eliminar un usuario
 function eliminarUsuario(index) {
-    
-    
     const usuarios = JSON.parse(localStorage.getItem("usuarios"));
-    usuarios.splice(index, 1); 
+    usuarios.splice(index, 1);
     localStorage.setItem("usuarios", JSON.stringify(usuarios));
     cargarUsuarios();
-    
 }
 
- verificarAccesoAdmin();
- cargarUsuarios();
+// Cargar la lista de usuarios estacionados
+function loadUsers() {
+    const parkedCars = JSON.parse(localStorage.getItem('parkedCars')) || {};
+    const userList = document.getElementById('userList');
+
+    userList.innerHTML = '';
+
+    Object.entries(parkedCars).forEach(([spot, car]) => {
+        const userCard = document.createElement('div');
+        userCard.classList.add('card', 'mb-3');
+
+        userCard.innerHTML = `
+            <div class="card-body">
+            <h5 class="card-title">${car.userName}</h5>
+            <p class="card-text">Número de documento: ${car.documentNumber}</p>
+            <p class="card-text">Lugar asignado: ${spot}</p>
+            <button class="btn btn-danger" onclick="removeUser('${spot}')">Eliminar</button>
+            </div>
+        `;
+
+        userList.appendChild(userCard);
+    });
+}
+
+// Eliminar un usuario de estacionamiento
+function removeUser(spot) {
+    const parkedCars = JSON.parse(localStorage.getItem('parkedCars')) || {};
+
+    if (parkedCars[spot]) {
+        delete parkedCars[spot];
+        localStorage.setItem('parkedCars', JSON.stringify(parkedCars));
+        loadUsers();
+        alert(`El lugar ${spot} ha sido liberado.`);
+    }
+}
+
+// Cargar la lista de estacionamientos disponibles
+function loadParkingSpots() {
+    const parkingSpots = JSON.parse(localStorage.getItem('parkingSpots')) || {};
+    const estacionamientoList = document.getElementById('estacionamientoList');
+
+    estacionamientoList.innerHTML = '';
+
+    Object.entries(parkingSpots).forEach(([spot, status]) => {
+        const spotCard = document.createElement('div');
+        spotCard.classList.add('card', 'mb-3');
+
+        spotCard.innerHTML = `
+            <div class="card-body">
+            <h5 class="card-title">Lugar: ${spot}</h5>
+            <p class="card-text">Estado: ${status ? 'Ocupado' : 'Libre'}</p>
+            </div>
+        `;
+
+        estacionamientoList.appendChild(spotCard);
+    });
+}
+
+// Cerrar sesión
+document.getElementById('loginBtn').addEventListener('click', function() {
+    localStorage.removeItem("loggedInUser");
+    window.location.href = "Login.html"; 
+});
+
+// Ejecutar la verificación y carga de datos
+document.addEventListener("DOMContentLoaded", function() {
+    verificarAccesoAdmin(); 
+    cargarUsuarios();
+    loadUsers();
+    loadParkingSpots();
+});
