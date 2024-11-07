@@ -5,9 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sistema de Estacionamiento</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../Css/Parking.css">
 </head>
 <body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-danger">
+  <nav class="navbar navbar-expand-lg navbar-dark custom-bg">
     <a class="navbar-brand" href="./index.html">Sistema de Estacionamiento</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
       aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -29,7 +30,7 @@
     <div class="row">
       <div class="col-md-6 offset-md-3">
         <div class="card">
-          <div class="card-header bg-danger text-white">Registro de Usuario</div>
+          <div class="card-header custom-bg text-white">Registro de Usuario</div>
           <div class="card-body">
             <form id="registrationForm">
               <div class="mb-3">
@@ -55,7 +56,7 @@
                   <option value="B4">B4</option>
                 </select>
               </div>
-              <button type="submit" class="btn btn-danger">Registrar</button>
+              <button type="submit" class="btn custom-bg">Registrar</button>
             </form>
           </div>
         </div>
@@ -64,27 +65,26 @@
           <h3 class="mb-3">Estacionamiento</h3>
           <div class="row row-cols-2 g-4" id="parkingLot">
             <div class="col d-flex justify-content-center">
-              <div class="card parking-spot" data-spot="A1" style="width: 80px; height: 80px; display: flex; align-items: center; justify-content: center;">A1</div>
-              <div class="card parking-spot" data-spot="A2" style="width: 80px; height: 80px; display: flex; align-items: center; justify-content: center;">A2</div>
-              <div class="card parking-spot" data-spot="A3" style="width: 80px; height: 80px; display: flex; align-items: center; justify-content: center;">A3</div>
-              <div class="card parking-spot" data-spot="A4" style="width: 80px; height: 80px; display: flex; align-items: center; justify-content: center;">A4</div>
+              <div class="card parking-spot" data-spot="A1">A1</div>
+              <div class="card parking-spot" data-spot="A2">A2</div>
+              <div class="card parking-spot" data-spot="A3">A3</div>
+              <div class="card parking-spot" data-spot="A4">A4</div>
             </div>
             <div class="col d-flex justify-content-center">
-              <div class="card parking-spot" data-spot="B1" style="width: 80px; height: 80px; display: flex; align-items: center; justify-content: center;">B1</div>
-              <div class="card parking-spot" data-spot="B2" style="width: 80px; height: 80px; display: flex; align-items: center; justify-content: center;">B2</div>
-              <div class="card parking-spot" data-spot="B3" style="width: 80px; height: 80px; display: flex; align-items: center; justify-content: center;">B3</div>
-              <div class="card parking-spot" data-spot="B4" style="width: 80px; height: 80px; display: flex; align-items: center; justify-content: center;">B4</div>
+              <div class="card parking-spot" data-spot="B1">B1</div>
+              <div class="card parking-spot" data-spot="B2">B2</div>
+              <div class="card parking-spot" data-spot="B3">B3</div>
+              <div class="card parking-spot" data-spot="B4">B4</div>
             </div>
           </div>
         </div>
 
-        <div class="modal fade" id="parkingSpotInfoModal" tabindex="-1" aria-labelledby="parkingSpotInfoModalLabel"
-          aria-hidden="true">
+        <div class="modal fade" id="parkingSpotInfoModal" tabindex="-1" aria-labelledby="parkingSpotInfoModalLabel" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
-              <div class="modal-header bg-danger text-white">
+              <div class="modal-header custom-bg text-white">
                 <h5 class="modal-title" id="parkingSpotInfoModalLabel">Información del Lugar</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
                 <ul id="modalInfo"></ul>
